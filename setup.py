@@ -33,7 +33,7 @@ setup(name='zopper.ws',
         ],
     entry_points = """\
     [paste.app_factory]
-    main = zopper.ws.restful_services:main
+    main = zopper.ws:main
     """,
     paster_plugins=['pyramid'],
 )

@@ -1,4 +1,5 @@
-"""Main entry point
+"""
+Main entry point
 """
 from pyramid.config import Configurator
 
