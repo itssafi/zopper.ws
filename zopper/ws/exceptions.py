@@ -1,15 +1,18 @@
-class MyException(Exception):
-    """Base class exceptions for other exceptions"""
-    pass
+class InvalidFilterFoundException(Exception):
 
-class SourceDestinationSameError(MyException):
-    """Raised when source and destination are same"""
-    pass
+    def __init__(self, message=(400, 'Invalid filter found.')):
+        self.status_code = message[0]
+        self.value = message[1]
 
-class KeyMissingError(MyException):
-    """Raised when key missing in input"""
-    pass
+    def __str__(self):
+        return repr(self.value)
 
-class ValueMissingError(MyException):
-    """Raised when value missing in input"""
-    pass
+
+class NoFilterPassed(Exception):
+
+    def __init__(self, message=(404, 'No filter is passed')):
+        self.status_code = message[0]
+        self.value = message[1]
+
+    def __str__(self):
+        return repr(self.value)
