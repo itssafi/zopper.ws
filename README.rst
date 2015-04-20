@@ -6,8 +6,8 @@ Help:
 
 Step 1:
 Install setup.py using python 2.6.x
->>>pytohn setup.py install
->>>python setup.py develop
+$ python setup.py install
+$ python setup.py develop
 
 Step 2:
 Add 'REST client' add-ons in firefox browser
