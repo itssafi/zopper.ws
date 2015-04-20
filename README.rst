@@ -18,8 +18,11 @@ Add 'REST client' add-ons in firefox browser
 Step 3:
 
 Load data in database
+
 url: http:172.0.0.1:8080/dataload/
+
 method: POST
+
 content-type: application/json
 
 Payload should be in below format--
@@ -29,6 +32,7 @@ Payload should be in below format--
 Step 4:
 
 Search data using given below url--
+
 method: GET
 
 Valid URL
