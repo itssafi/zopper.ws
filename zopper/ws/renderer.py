@@ -26,7 +26,7 @@ def exception_response(exception):
     """ Generating a response when a exception is raised. """
     status_int = 500
     exception_message = str(exception)
-    import pdb; pdb.set_trace()
+
     if hasattr(exception,'value'):
         status_int = exception.status_code
         exception_message = """<?xml version='1.0' encoding='UTF-8'?><WebServiceError><exception_class>%s</exception_class><message>%s</message><log_level>ERROR</log_level></WebServiceError>""" % (exception.__class__.__name__, exception.value)

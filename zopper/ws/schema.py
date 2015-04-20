@@ -15,7 +15,7 @@ class Zopper(Base):
     __tablename__ = 'zopper'
     device_idn = Column(Integer, autoincrement=True, primary_key=True)
     device_name = Column(String(250))
-    gmnification = Column(String(50))
+    mgnification = Column(String(50))
     field_of_view = Column(String(50))
     range = Column(String(50))
 
