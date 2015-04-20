@@ -2,6 +2,7 @@ Documentation
 =============
 
 Help:
+====
 
 Step 1:
 Install setup.py using python 2.6.x
