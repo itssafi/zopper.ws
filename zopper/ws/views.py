@@ -89,17 +89,20 @@ class DataLoad(object):
             if search_results[0]:
                 logger.info("Passed query string:%s." % str(self.filter_str))
                 results = common_query.filter(and_(*search_results[0])).all()
+                self.session.close()
 
             if results:
                 self.response_dict['location'] = '/searchdata/'
                 self.response_dict['message'] = str(results)
                 self.response_dict['status_code'] = 200
+                self.session.close()
                 return self.response_dict
 
             else:
                 self.response_dict['location'] = '/searchdata/'
                 self.response_dict['message'] = 'No data found'
                 self.response_dict['status_code'] = 200
+                self.session.close()
                 return self.response_dict
 
     def filter_validation(self):

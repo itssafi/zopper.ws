@@ -29,7 +29,9 @@ setup(name='zopper.ws',
     install_requires=[
         'cornice',
         'waitress',
-        'SQLAlchemy==0.7.6'
+        'SQLAlchemy==0.7.6',
+        'nose',
+        'webtest'
         ],
     entry_points = """\
     [paste.app_factory]
