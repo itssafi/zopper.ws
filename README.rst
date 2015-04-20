@@ -38,9 +38,9 @@ method: GET
 Valid URL
 ---------
 url: http:172.0.0.1:8080/searchdata/?filter=field_of_view=11,gmnification=8,range=800
-or
+
 http:172.0.0.1:8080/searchdata/?filter=field_of_view=11,gmnification=8
-or
+
 http:172.0.0.1:8080/searchdata/?filter=field_of_view=11
 
 Invalid URL
