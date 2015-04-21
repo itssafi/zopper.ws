@@ -78,7 +78,7 @@ class DataLoad(object):
                            "(1)Filter:'mgnification', Operators:'=' "\
                            "(2)Filter:'field_of_view' Operators:'=' "\
                            "(3)Filter:'range' Operators:'=' "\
-                           "like '?filter=gmnification=7' or '?filter=range>=800&field_of_view=8'."\
+                           "like '?filter=gmnification=7' or '?filter=range=800&field_of_view=8'."\
                            "Kindly pass the valid filter with their corresponding operator and try again.".format(search_results[0].strip('"')))
                 return InvalidFilterFoundException(msg)
 
