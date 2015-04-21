@@ -71,12 +71,13 @@ class DataLoad(object):
 
             self.filter_str = self.request.GET.get('filter', '')
             search_results = self.filter_validation()
+
             if not search_results[1]:
                 msg = (400, "'{0}' is an invalid filter."\
                            " These are the valid filters and their corresponding operators to be used: "\
                            "(1)Filter:'mgnification', Operators:'=' "\
                            "(2)Filter:'field_of_view' Operators:'=' "\
-                           "(3)Filter:'range' Operators:'==,>,<,<=,>=' "\
+                           "(3)Filter:'range' Operators:'=' "\
                            "like '?filter=gmnification=7' or '?filter=range>=800&field_of_view=8'."\
                            "Kindly pass the valid filter with their corresponding operator and try again.".format(search_results[0].strip('"')))
                 return InvalidFilterFoundException(msg)
@@ -112,7 +113,7 @@ class DataLoad(object):
         filter_attributes = self.filter_str.split(',')
         terms = []
         for attribute in filter_attributes:
-            filter_group = re.search(r'([a-zA-Z0-9_-]+)(=|==|>|<|<=|>=|!=)([a-zA-Z0-9_\-\.0-9]+)', attribute)
+            filter_group = re.search(r'([a-zA-Z0-9_-]+)(=)([a-zA-Z0-9_\-\.0-9]+)', attribute)
             if not filter_group:
                 return (attribute, False)
 
@@ -127,20 +128,7 @@ class DataLoad(object):
                 expression = Zopper.field_of_view == value
 
             elif key == 'range':
-                if operator == '==':
-                    expression = Zopper.range == value
-                elif operator == '>':
-                    expression = Zopper.range > value
-                elif operator == '<':
-                    expression = Zopper.range < value
-                elif operator == '>=':
-                    expression = Zopper.range >= value
-                elif operator == '<=':
-                    expression = Zopper.range <= value
-                else:
-                    msg = (400, "The passed operator %s is invalid,"\
-                           "the operator should be '==' or '>' or '>=' or '<='" % operator)
-                    return InvalidFilterFoundException(msg)
+                expression = Zopper.range == value
 
             else:
                 return (attribute, False)
