@@ -52,12 +52,12 @@ method: GET
 
 Valid URL
 ---------
-url: http:172.0.0.1:8080/searchdata/?filter=field_of_view=11,mgnification=8,range=800
+url: http:127.0.0.1:8080/searchdata/?filter=field_of_view=11,mgnification=8,range=800
 
-http:172.0.0.1:8080/searchdata/?filter=field_of_view=11,mgnification=8
+http:127.0.0.1:8080/searchdata/?filter=field_of_view=11,mgnification=8
 
-http:172.0.0.1:8080/searchdata/?filter=field_of_view=11
+http:127.0.0.1:8080/searchdata/?filter=field_of_view=11
 
 Invalid URL
 -----------
-url: http:172.0.0.1:8080/searchdata/?field_of_view=11,mgnification=8,range=800
+url: http:127.0.0.1:8080/searchdata/?field_of_view=11,mgnification=8,range=800
