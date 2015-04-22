@@ -93,8 +93,16 @@ class DataLoad(object):
                 self.session.close()
 
             if results:
+                res = "<?xml version='1.0' encoding='UTF-8'?>\n<SEARCH_DATA>\n"
+                for index, value in enumerate(results):
+                    res += "   <ROW_DATA%s>\n      <DEVICE_NAME>%s</DEVICE_NAME>\n"\
+                        "      <MGNIFICATION>%s</MGNIFICATION>\n      <FIELD_OF_VIEW>%s"\
+                        "</FIELD_OF_VIEW>\n      <RANGE>%s"\
+                        "</RANGE>\n   </ROW_DATA%s>\n" %(index+1, value[0], value[1],
+                                                        value[2], value[3], index+1)
+                res += "</SEARCH_DATA>"
                 self.response_dict['location'] = '/searchdata/'
-                self.response_dict['message'] = str(results)
+                self.response_dict['message'] = str(res)
                 self.response_dict['status_code'] = 200
                 self.session.close()
                 return self.response_dict
