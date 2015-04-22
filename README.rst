@@ -34,7 +34,7 @@ Step 5:
 
 Load data in database
 
-url: http:172.0.0.1:8080/dataload/
+url: http:127.0.0.1:8080/dataload/
 
 method: POST
 
