@@ -28,6 +28,8 @@ Step 4:
 
 Start Server using below command
 
+$ cd zooper.ws
+
 $ pserve development.ini --reload
 
 Step 5:
