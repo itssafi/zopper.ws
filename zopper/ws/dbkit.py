@@ -11,7 +11,7 @@ class CreateSession:
     @classmethod
     def createsession(cls):
         if cls.session == None:
-            engine = create_engine('sqlite:///zopper.db',echo=False)
+            engine = create_engine('sqlite:///zopper.db', echo=False)
             conn = engine.connect()
             Session = sessionmaker(bind=engine)
             session = Session()

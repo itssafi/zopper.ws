@@ -15,7 +15,7 @@ def dict_response(response_dict):
 
     logger.info("Successfully generated response.")
 
-    return Response(content_type='application/plain',
+    return Response(content_type='application/json',
                     status_int = response_dict['status_code'],
                     body = response_dict['message'],
                     headerlist = headerlist
@@ -29,12 +29,13 @@ def exception_response(exception):
 
     if hasattr(exception,'value'):
         status_int = exception.status_code
-        exception_message = """<?xml version='1.0' encoding='UTF-8'?><WebServiceError><exception_class>%s</exception_class><message>%s</message><log_level>ERROR</log_level></WebServiceError>""" % (exception.__class__.__name__, exception.value)
-        logger.info("Generated exception status_code:'%s' and XML:'%s'." % (exception.status_code, exception_message))
+        exception_message = {"WebServiceError": {"exception_class": exception.__class__.__name__,
+                                                 "message": exception.value, "log_level": "ERROR"}}
+        logger.info("Generated exception status_code: '%s' and JSON:'%s'." % (exception.status_code, exception_message))
     else:
-        exception_message = """<?xml version='1.0' encoding='UTF-8'?><WebServiceError><error>%s</error></WebServiceError>""" % (exception.message)
-        logger.info("Generated exception XML:'%s'." % (exception_message))
+        exception_message = {"WebServiceError": {"error": exception.message}}
+        logger.info("Generated exception JSON:'%s'." % (exception_message))
 
-    return Response(content_type='application/xml',
-                    body=exception_message,
+    return Response(content_type='application/json',
+                    body=str(exception_message),
                     status_int = status_int)
