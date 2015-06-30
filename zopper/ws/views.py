@@ -122,7 +122,8 @@ class DataLoad(object):
                                 "FIELD_OF_VIEW": value[2],
                                 "RANGE": value[3]}
                     res.append(row_data)
-                
+            if not res:
+                logger.info("No recond found !!!")
             self.response_dict['location'] = '/searchdata/'
             self.response_dict['message'] = str({"SearchData": res})
             self.response_dict['status_code'] = 200
