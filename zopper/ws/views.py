@@ -8,14 +8,26 @@ import re
 from schema import create_table, Zopper
 from exceptions import (NoFilterPassed,
                         InvadilDataException,
-                        InvalidFilterFoundException)
+                        InvalidFilterFoundException,
+                        NoDataPassedException)
 from sqlalchemy import update
 from sqlalchemy.sql import and_
 from zopper.ws.dbkit import CreateSession, SessionCommit
 from cornice.resource import resource
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 
 logger = logging.getLogger('zopper.ws')
+config = ConfigParser()
+config.read('zopper.ws//development.ini')
+should_commit = config.get('zopper_config', 'commit')
+if should_commit == 'true':
+    should_commit = True
+else:
+    should_commit = False
 
 
 @resource(collection_path='/dataload/', path='/searchdata/')
@@ -26,7 +38,9 @@ class DataLoad(object):
         self.response_dict = {}
         self.session = CreateSession.createsession()
         logger.info("Initializing resources")
-        logger.info("Requested URl: %s, HTTP Method Used: %s" % (self.request.url, self.request.method))
+        logger.info("Requested URl: %s,"\
+                    " HTTP Method Used: %s" % (self.request.url,
+                                               self.request.method))
         logger.info("Module Name:'Views'")
 
     def collection_post(self):
@@ -39,6 +53,10 @@ class DataLoad(object):
             data = records['data']
             fields = records['fields']
             columns = data.pop(0)
+            if not data:
+                msg = (400, "No data passed in payload: %s" % (dataload))
+                return NoDataPassedException(msg)
+
             for index, each_data in enumerate(data):
                 values = Zopper(device_name=each_data[0],
                                 mgnification=each_data[1],
@@ -47,12 +65,14 @@ class DataLoad(object):
                 self.session.add(values)
                 self.session.flush()
                 logger.info('Loading record %s' % str(index+1))
-                commit_obj = SessionCommit(self.session)
-                commit_obj.commit(flag=True)
-                self.session.close()
-                self.response_dict['location'] = '/dataload/'
-                self.response_dict['message'] = 'Data loaded successfully.'
-                self.response_dict['status_code'] = 201
+
+            commit_obj = SessionCommit(self.session)
+            commit_obj.commit(flag=should_commit)
+            self.session.close()
+            response_msg = {"response_msg": 'Data loaded successfully.'}
+            self.response_dict['location'] = '/dataload/'
+            self.response_dict['message'] = str(response_msg)
+            self.response_dict['status_code'] = 201
             return self.response_dict
         except Exception:
             msg = (400, "Invalid data passed in payload: %s" % (dataload))

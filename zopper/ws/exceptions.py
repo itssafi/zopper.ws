@@ -26,3 +26,13 @@ class InvadilDataException(Exception):
 
     def __str__(self):
         return repr(self.value)
+
+
+class NoDataPassedException(Exception):
+
+    def __init__(self, message=(400, 'No data is passed')):
+        self.status_code = message[0]
+        self.value = message[1]
+
+    def __str__(self):
+        return repr(self.value)
