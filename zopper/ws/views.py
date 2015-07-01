@@ -23,11 +23,7 @@ except ImportError:
 logger = logging.getLogger('zopper.ws')
 config = ConfigParser()
 config.read('zopper.ws//development.ini')
-should_commit = config.get('zopper_config', 'commit')
-if should_commit == 'true':
-    should_commit = True
-else:
-    should_commit = False
+should_commit = json.loads(config.get('zopper_config', 'commit'))
 
 
 @resource(collection_path='/dataload/', path='/searchdata/')
@@ -78,7 +74,7 @@ class DataLoad(object):
             msg = (400, "Invalid data passed in payload: %s" % (dataload))
             return InvadilDataException(msg)
 
-    def get(self):
+    def get(self):  
         """
         Search data from database
         """
@@ -122,11 +118,13 @@ class DataLoad(object):
                                 "FIELD_OF_VIEW": value[2],
                                 "RANGE": value[3]}
                     res.append(row_data)
-            if not res:
-                logger.info("No recond found !!!")
+
             self.response_dict['location'] = '/searchdata/'
             self.response_dict['message'] = str({"SearchData": res})
             self.response_dict['status_code'] = 200
+            if not res:
+                logger.info("No recond found !!!")
+                self.response_dict['status_code'] = 404
             self.session.close()
             return self.response_dict
 
